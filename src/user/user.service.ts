@@ -14,10 +14,12 @@ export class UserService {
 
   async createUser(createUserDTO: CreateUserDTO): Promise<UserEntity> {
     const saltOrRounds = 10;
+
     const passwordHash = await hash(createUserDTO.password, saltOrRounds);
 
     return this.userRepository.save({
       ...createUserDTO,
+      typeUser: 1,
       password: passwordHash,
     });
   }
