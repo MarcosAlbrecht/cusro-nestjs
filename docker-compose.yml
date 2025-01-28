@@ -1,0 +1,11 @@
+name: nest-vendas
+
+services:
+  pg:
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DB=vendas

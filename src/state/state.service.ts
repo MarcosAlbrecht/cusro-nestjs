@@ -11,6 +11,8 @@ export class StateService {
   ) {}
 
   async getAllState(): Promise<StateEntity[]> {
+    var teste = 'marcos';
+
     return this.stateRepository.find();
   }
 }
