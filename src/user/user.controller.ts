@@ -4,9 +4,12 @@ import {
   Get,
   Param,
   Post,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { UserId } from 'src/decorators/user-id.decorator';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { CreateUserDTO } from './dtos/createUser.dto';
 import { ReturnUserDto } from './dtos/returnUser.dto';
 import { UserEntity } from './interfaces/user.entity';
@@ -21,12 +24,15 @@ export class UserController {
     return this.userService.createUser(createUser);
   }
 
+  @UseGuards(AuthGuard)
   @Get()
-  async getAllUser(): Promise<ReturnUserDto[]> {
+  async getAllUser(@UserId() userId: number): Promise<ReturnUserDto[]> {
+    console.log('user id: ', userId);
     return (await this.userService.getAllUser()).map(
       (userEntity) => new ReturnUserDto(userEntity),
     );
   }
+  @UseGuards(AuthGuard)
   @Get('/:userId')
   async getUserById(@Param('userId') userId: number): Promise<ReturnUserDto> {
     return new ReturnUserDto(
